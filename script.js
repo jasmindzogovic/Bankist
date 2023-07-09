@@ -92,5 +92,4 @@ const createUserNames = function (accs) {
   });
 };
 
-console.log(accounts);
 createUserNames(accounts);
