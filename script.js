@@ -99,6 +99,15 @@ const calcDisplaySummary = function (movements) {
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(withdrawals)} €`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(mov => mov * 0.012)
+    .filter((mov, i, arr) => {
+      return mov >= 1;
+    })
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumInterest.textContent = `${Math.floor(interest)}`;
 };
 
 calcDisplaySummary(account1.movements);
