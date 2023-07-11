@@ -63,11 +63,12 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // CREATING DISPLAY FUNCTION FOR THE APP
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
-  // .textContent = 0;
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? `deposit` : `withdrawal`;
 
     const html = `
@@ -234,4 +235,14 @@ btnClose.addEventListener('click', function (e) {
 
   // CLEAR FIELDS
   inputCloseUsername.value = inputClosePin.value = '';
+});
+
+let sorted = false;
+
+// IMPLEMENTING SORTING FUNCTIONALITY
+
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
