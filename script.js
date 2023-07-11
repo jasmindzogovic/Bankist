@@ -181,3 +181,25 @@ btnTransfer.addEventListener('click', function (e) {
     updateUI(currentAccount);
   }
 });
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    currentAccount.usernamme === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.usernamme === currentAccount.usernamme
+    );
+
+    // DELETE ACCOUNT
+    accounts.splice(index, 1);
+
+    // HIDE UI
+    containerApp.style.opacity = '0';
+  }
+
+  // CLEAR FIELDS
+  inputCloseUsername.value = inputClosePin.value = '';
+});
