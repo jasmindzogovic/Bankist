@@ -61,6 +61,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// CREATING DISPLAY FUNCTION FOR THE APP
+
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
   // .textContent = 0;
@@ -80,10 +82,14 @@ const displayMovements = function (movements) {
   });
 };
 
+// CALCULATING BALANCE TO DISPLAY
+
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${acc.balance} €`;
 };
+
+// FUNCTION FOR DISPLAYING THE SUMMARY
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
@@ -106,6 +112,8 @@ const calcDisplaySummary = function (acc) {
   labelSumInterest.textContent = `${interest}`;
 };
 
+// LOOP TO CREATE USERNAMES TO LOGIN
+
 const createUserNames = function (accs) {
   accs.forEach(function (acc) {
     acc.usernamme = acc.owner
@@ -117,6 +125,8 @@ const createUserNames = function (accs) {
 };
 
 createUserNames(accounts);
+
+// FUNCTION TO UPDATE THE UI
 
 const updateUI = function (acc) {
   // DISPLAY MOVEMENTS
@@ -157,6 +167,8 @@ btnLogin.addEventListener('click', function (e) {
   }
 });
 
+// IMPLEMENTING TRANSFER
+
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -181,6 +193,26 @@ btnTransfer.addEventListener('click', function (e) {
     updateUI(currentAccount);
   }
 });
+
+// IMPLEMENTING LOAN REQUEST FUNCTIONALITY
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // ADD MOVEMENT
+    currentAccount.movements.push(amount);
+
+    // UPDATE UI
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = '';
+});
+
+// IMPLEMENT CLOSING ACCOUNT FUNCTIONALITY
 
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
